@@ -1,20 +1,16 @@
 <!doctype html>
-<html lang="en" ng-app>
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-  <title>Your Own Personal GitHub</title>
+  <title>LocalHub: Your Own Personal GitHub</title>
 
-  <link rel="stylesheet" href="/node_modules/winjs/css/ui-dark.css">
+  <link rel="stylesheet" href="/lib/index.css">
 </head>
 <body>
-  <win-app-bar>
-    <win-app-bar-command icon="'home'" label="'Home'"></win-app-bar-command>
-    <win-app-bar-command icon="'save'" label="'Save'"></win-app-bar-command>
-  </win-app-bar>
+  <main role="main"></main>
 
-  <script src="/node_modules/amd.js/amd.js"
-    data-config="/lib/config" data-main="/lib/index"></script>
+  <script src="/node_modules/amd.js/amd.js" data-main="/lib/index"></script>
 </body>
 </html>

@@ -1,0 +1,70 @@
+<div class="header header-logged-in true" role="banner">
+  <div class="container clearfix">
+    <div>
+      <a href="#/"><span class="octicon octicon-playback-rewind"></span> Return to Repositories</a> |
+      <span class="count">{{ model.get 'name' }}</span>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="columns">
+    <div class="three-fourths column">
+      <nav class="menu files">
+        <a class="menu-item commit_message">
+          {{ model.message }}
+        </a>
+        <a class="menu-item commit_details">
+          <img class="avatar avatar-small" src="http://www.gravatar.com/avatar/{{ model.md5 }}" width="20" height="20">
+          {{ model.attributes.commit.author.name }} <span class="commit_date">authored {{ model.attributes.commit.date }}</span>
+          <span class="latest_commit">
+            latest commit <span class="commit_sha">{{ model.attributes.commit.sha|slice 0 10 }}</span>
+            <span class="octicon octicon-clippy"></span>
+          </span>
+        </a>
+        {%each model.get 'tree' as entry%}
+        <a class="menu-item" href="#">
+          {%if entry.isDirectory%}
+          <span class="octicon octicon-file-directory"></span>
+          {%else%}
+          <span class="octicon octicon-file-text"></span>
+          {%endif%}
+          {{ entry.path }}
+        </a>
+        {%endeach%}
+      </nav>
+
+      <nav class="menu">
+        <span class="menu-heading">README.md</span>
+
+        <span class="menu-item readme">
+        {{{ model.get 'readme' }}}
+        </span>
+      </nav>
+    </div>
+
+    <div class="one-fourth column">
+      <nav class="menu">
+        <a class="menu-item selected" href="#">
+          <span class="octicon octicon-code"></span>
+          Code
+        </a>
+        <a class="menu-item" href="#">
+          <span class="octicon octicon-tag"></span>
+          <span class="counter">{{ model.get 'tags' }}</span>
+          Tags
+        </a>
+        <a class="menu-item" href="#">
+          <span class="octicon octicon-book"></span>
+          <span class="counter">{{ model.get 'notes' }}</span>
+          Notes
+        </a>
+        <a class="menu-item" href="#">
+          <span class="octicon octicon-git-commit"></span>
+          <span class="counter">{{ model.get 'commits' }}</span>
+          Commits
+        </a>
+      </nav>
+    </div>
+  </div>
+</div>

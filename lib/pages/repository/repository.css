@@ -1,0 +1,70 @@
+.files {
+  background-color: #F8F8F8;
+}
+
+.readme {
+  background-color: #FFFFFF;
+  padding: 20px;
+  padding-top: 10px;
+  font-size: 16px;
+}
+
+.readme pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85% !important;
+  line-height: 1.45;
+  background-color: #F7F7F7;
+  border-radius: 3px;
+}
+
+.readme h3 {
+  font-size: 24px;
+}
+
+.readme h4 {
+  font-size: 20px;
+}
+
+.readme pre code {
+  font-size: inherit;
+}
+
+.readme ul {
+  padding: 0;
+  padding-left: 2em;
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.commit_message {
+  background: #E6F1F6 !important;
+}
+
+.commit_details:hover, .readme:hover {
+  background-color: #FFFFFF;
+}
+
+.commit_details {
+  background-color: #FFFFFF;
+  height: 36px;
+  color: #444444;
+  font-size: 12px;
+  padding-right: 0px;
+}
+
+.commit_sha {
+  color: #999;
+}
+
+.commit_date {
+  color: #999;
+}
+
+.octicon.octicon-file-directory {
+  color: #80A6CD;
+}
+
+.latest_commit {
+  float: right;
+}

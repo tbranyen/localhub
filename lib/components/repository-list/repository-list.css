@@ -1,0 +1,24 @@
+.open {
+  float: right;
+  opacity: .5;
+  transition: opacity linear .2s;
+  position: relative;
+  top: -5px;
+}
+
+.open:hover {
+  opacity: 1;
+}
+
+.repo-list-item {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.repo-list-item:hover {
+  background: #FFFDF4;
+}
+
+input[type=file] {
+  display: none;
+}

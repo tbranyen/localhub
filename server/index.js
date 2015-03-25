@@ -1,12 +1,10 @@
-var promisify = require('promisify-node');
 var express = require('express');
 var configure = require('./configure');
-var api = configure(express());
+var api = require('./api');
+var app = configure(express());
 
-api.get('/', function(req, res) {
+app.get('/', function(req, res) {
   res.render('index');
 });
 
-api.get('/repositories', function(req, res) {
-  
-});
+app.use('/api', api);

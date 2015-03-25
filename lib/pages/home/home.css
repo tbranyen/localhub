@@ -1,0 +1,43 @@
+input[type=text] {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.repo-list-item {
+  position: relative;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  list-style: none;
+  border-bottom: 1px solid #EEE;
+}
+
+.sync {
+  float: right;
+  margin-top: 10px;
+}
+
+.sync:after {
+  content: "Sync";
+}
+
+.sync.pending .octicon {
+  -webkit-animation: spin 4s linear infinite;
+  -moz-animation: spin 4s linear infinite;
+  animation: spin 4s linear infinite;
+}
+
+.sync.pending:after {
+  content: "Synchronizing...";
+}
+
+@-moz-keyframes spin {
+  100% { -moz-transform: rotate(360deg); }
+}
+
+@-webkit-keyframes spin {
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); }
+}

@@ -1,0 +1,23 @@
+@import "/node_modules/primer/css/primer.css";
+@import "/node_modules/octicons/octicons/octicons.css";
+@import "/node_modules/highlight.js/styles/github.css";
+
+@import "/lib/pages/home/home.css";
+@import "/lib/pages/repository/repository.css";
+
+@import "/lib/components/repository-list/repository-list.css";
+
+.header {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 100%;
+  background-color: #F5F5F5;
+  border-bottom: 1px solid #E5E5E5;
+  margin-bottom: 20px;
+}
+
+.container {
+  padding: 0px 20px;
+  width: 100%;
+  max-width: 980px;
+}
