@@ -19,14 +19,19 @@
   },
   "dependencies": {
     "amd.js": "tbranyen/amd.js",
-    "combyne-amd-loader": "tbranyen/combyne-amd-loader",
     "blueimp-md5": "^1.1.0",
     "combyne": "^0.6.5",
+    "combyne-amd-loader": "tbranyen/combyne-amd-loader",
     "moment": "^2.9.0",
     "octicons": "^2.2.0",
-    "primer": "primer/primer"
+    "primer": "primer/primer",
+    "timelinejs": "^2.35.6"
   },
   "paths": {
     "html": "combyne-amd-loader"
+  },
+  "shim": {
+    "timelinejs/build/js/storyjs-embed": ["jquery"],
+    "timelinejs": ["jquery", "timelinejs/build/js/storyjs-embed"]
   }
 }

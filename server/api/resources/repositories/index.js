@@ -6,6 +6,7 @@ var Git = require('nodegit');
 var Remarkable = require('remarkable');
 var hljs = require('highlight.js');
 var homedir = require('homedir');
+var moment = require('moment');
 
 var cache = require('./cache');
 
@@ -81,7 +82,14 @@ resource.get('/:id/:branch/commits', function(req, res, next) {
   Git.Repository.open(repo.location)
     .then(getAllCommits('refs/heads/' + req.params.branch))
     .then(function(commits) {
-      res.json(commits.map(getCommitDetails));
+      res.json(commits.map(function(commit) {
+        var details = getCommitDetails(commit);
+        var precise = moment(commit.date());
+
+        details.timeline = precise.format('YYYY,MM,DD');
+
+        return details;
+      }));
     });
 });
 

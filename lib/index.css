@@ -4,6 +4,7 @@
 
 @import "/lib/pages/home/home.css";
 @import "/lib/pages/repository/repository.css";
+@import "/lib/pages/commits/commits.css";
 
 @import "/lib/components/repository-list/repository-list.css";
 @import "/lib/components/commits-list/commits-list.css";
