@@ -61,7 +61,7 @@
 }
 
 .commit_details:hover, .readme:hover {
-  background-color: #FFFFFF;
+  background-color: #FFFFFF !important;
 }
 
 .menu-item:hover {
@@ -95,5 +95,14 @@
 }
 
 .latest_commit {
+  float: right;
+}
+
+a.message {
+  color: #777;
+}
+
+span.date {
+  color: #777;
   float: right;
 }

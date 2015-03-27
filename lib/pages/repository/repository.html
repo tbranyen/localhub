@@ -15,23 +15,35 @@
         <a class="menu-item commit_message">
           {{ model.commit.oneline }}
         </a>
-        <a class="menu-item commit_details">
+        <div class="menu-item commit_details">
           <img class="avatar avatar-small" src="http://www.gravatar.com/avatar/{{ model.commit.hash }}" width="20" height="20">
           {{ model.commit.attributes.author.name }} <span class="commit_date">authored {{ model.commit.get 'date' }}</span>
           <span class="latest_commit">
             latest commit <span class="commit_sha">{{ model.commit.attributes.sha|slice 0 10 }}</span>
             <span class="octicon octicon-clippy"></span>
           </span>
-        </a>
+        </div>
         {%each model.get 'tree' as entry%}
-        <a class="menu-item" href="#/repository/{{ model.get 'id' }}/blob/{{ model.get 'branch' }}/{{ entry.path }}">
-          {%if entry.isDirectory%}
-          <span class="octicon octicon-file-directory"></span>
-          {%else%}
-          <span class="octicon octicon-file-text"></span>
-          {%endif%}
-          {{ entry.path }}
-        </a>
+        <div class="menu-item" href="#/repository/{{ model.get 'id' }}/blob/{{ model.get 'branch' }}/{{ entry.path }}">
+          <div class="container">
+            <div class="columns">
+              <div class="column one-third">
+                {%if entry.isDirectory%}
+                <span class="octicon octicon-file-directory"></span>
+                {%else%}
+                <span class="octicon octicon-file-text"></span>
+                {%endif%}
+
+                <a href="#">{{ entry.path }}</a>
+              </div>
+
+              <div class="column two-thirds">
+                <a href="#" class="message" title="{{ model.commit.oneline }}">{{ model.commit.oneline|slice 0 50 }}...</a>
+                <span class="date">{{ model.commit.get 'date' }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
         {%endeach%}
       </nav>
 

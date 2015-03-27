@@ -24,6 +24,10 @@
   max-width: 980px;
 }
 
+.container .container {
+  padding: 0;
+}
+
 .sep {
   color: #CCC;
   top: 1px;
