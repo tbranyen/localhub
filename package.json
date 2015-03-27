@@ -1,7 +1,7 @@
 {
-  "name": "personal-github",
+  "name": "localhub",
   "version": "1.0.0",
-  "description": "Your own Personal Github (TM)",
+  "description": "Local hub of Git repositories",
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=test HOST=localhost PORT=8000 node server"
