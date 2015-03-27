@@ -1,0 +1,39 @@
+nav.menu {
+  border-color: #E5E5E5;
+}
+
+.commit_item {
+  height: 52px;
+  background-color: #FFF;
+}
+
+.commit_item:hover {
+  background-color: #F7FBFC;
+}
+
+.commit_item .container {
+  padding: 0;
+}
+
+.commit_item .avatar {
+  margin-right: 20px;
+}
+
+.commit_item strong {
+  color: #575757;
+  font-size: 14px;
+}
+
+.commit_item p {
+  padding: 0;
+  margin: 0;
+  color: #909090;
+}
+
+.commit_item button.sha {
+  width: 124px;
+}
+
+.commit_item button.code {
+  width: 40px;
+}

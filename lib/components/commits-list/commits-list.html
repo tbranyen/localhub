@@ -1,0 +1,20 @@
+<nav class="menu files">
+  {%each . as commit%}
+  <a class="menu-item commit_item">
+    <div class="container">
+      <div class="column four-fifths">
+        <img class="avatar avatar-small" src="http://www.gravatar.com/avatar/{{ commit.hash }}" width="36" height="36">
+        <strong>{{ commit.oneline|slice 0 75 }}</strong>
+        <p>{{ commit.attributes.author.name }} authored {{ commit.get 'date' }}</p>
+      </div>
+      <div class="column one-fifth">
+
+        <div class="btn-group">
+          <button class="btn btn-outline sha" type="button">{{ commit.attributes.sha|slice 0 12 }}</button>
+          <button class="btn btn-outline code" type="button"><span class="octicon octicon-code"></span></button>
+        </div>
+      </div>
+    </div>
+  </a>
+  {%endeach%}
+</nav>

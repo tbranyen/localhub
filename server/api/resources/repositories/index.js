@@ -5,23 +5,28 @@ var resource = express();
 var Git = require('nodegit');
 var Remarkable = require('remarkable');
 var hljs = require('highlight.js');
-var moment = require('moment');
 var homedir = require('homedir');
 
 var cache = require('./cache');
 
+var getCurrentBranchCommit = require('./git/get-current-branch-commit');
+var getCommitDetails = require('./git/get-commit-details');
 var getAllCommits = require('./git/get-all-commits');
 var getAllNotes = require('./git/get-all-notes');
 var getAllTags = require('./git/get-all-tags');
 var getREADME = require('./git/get-readme');
 var getTree = require('./git/get-tree');
-var getCurrentBranchCommit = require('./git/get-current-branch-commit');
 
 var defaultPath = homedir();
 
 cache.init(defaultPath);
 
 var md = new Remarkable({
+  html: true,
+  linkify: true,
+  typographer: true,
+  breaks: true,
+
   highlight: function (str, lang) {
     if (lang && hljs.getLanguage(lang)) {
       return hljs.highlight(lang, str).value;
@@ -70,6 +75,19 @@ resource.get('/sync', function(req, res, next) {
 /**
  * Get a specific repository's metadata.
  */
+resource.get('/:id/:branch/commits', function(req, res, next) {
+  var repo = cache.get(req.params.id);
+
+  Git.Repository.open(repo.location)
+    .then(getAllCommits('refs/heads/' + req.params.branch))
+    .then(function(commits) {
+      res.json(commits.map(getCommitDetails));
+    });
+});
+
+/**
+ * Get a specific repository's metadata.
+ */
 resource.get('/:id', function(req, res, next) {
   var repo = cache.get(req.params.id);
 
@@ -87,6 +105,11 @@ resource.get('/:id', function(req, res, next) {
   Git.Repository.open(repo.location).then(function(repository) {
     var currentBranchCommit = getCurrentBranchCommit(repository);
 
+    // Attach the branch name.
+    var branchName = repository.getCurrentBranch().then(function(branch) {
+      out.branch = branch.name().slice('refs/heads/'.length);
+    });
+
     var tree = currentBranchCommit.then(getTree).then(function(entries) {
       out.tree = entries;
     });
@@ -95,21 +118,16 @@ resource.get('/:id', function(req, res, next) {
       out.readme = md.render(blob.toString());
     });
 
-    var commitDetails = currentBranchCommit.then(function(commit) {
-      out.commit.message = commit.message();
-      out.commit.sha = commit.sha();
-      out.commit.date = moment(commit.date()).fromNow();
-      out.commit.author = {
-        name: commit.author().name(),
-        email: commit.author().email()
-      };
-    });
+    var commitDetails = currentBranchCommit.then(getCommitDetails)
+      .then(function(commit) {
+        out.commit = commit;
+      });
 
     var allNotes = getAllNotes(repository).then(function(notes) {
       out.notes = notes.length;
     });
 
-    var allCommits = getAllCommits(repository).then(function(commits) {
+    var allCommits = getAllCommits()(repository).then(function(commits) {
       out.commits = commits.length;
     });
 
@@ -124,6 +142,7 @@ resource.get('/:id', function(req, res, next) {
       allNotes,
       allCommits,
       allTags,
+      branchName,
     ]);
   }).then(function() {
     res.json(out);
