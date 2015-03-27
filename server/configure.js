@@ -6,8 +6,15 @@ const combynExpress = require('combynexpress');
 module.exports = function(server) {
   var port = process.env.PORT || 8000;
   var host = process.env.HOST;
-  var staticFiles = ['package.json', 'lib', 'dist', 'themes', 'node_modules'];
   var local = path.join.bind(path, __dirname);
+
+  server.staticFiles = [
+    'package.json',
+    'lib',
+    'dist',
+    'themes',
+    'node_modules'
+  ];
 
   if (process.env.NODE_ENV === 'production') {
     host = host || '127.0.0.1';
@@ -17,7 +24,7 @@ module.exports = function(server) {
   }
 
   // Serve static files locally during development.
-  staticFiles.forEach(function(name) {
+  server.staticFiles.forEach(function(name) {
     server.use('/' + name, express.static(path.resolve(name)));
   });
 

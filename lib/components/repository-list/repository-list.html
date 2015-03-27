@@ -3,7 +3,7 @@
   {%each . as repo%}
   <li class="repo-list-item public source">
     <h3 class="repo-list-name">
-      <a href="#/repository/{{ repo.get 'id' }}">{{ repo.get 'name' }}</a>
+      <a href="#repository/{{ repo.get 'id' }}">{{ repo.get 'name' }}</a>
       <button class="open btn btn-sm" type="button" href="/api/repositories/open?path={{ repo.get 'location' }}">
         <span class="octicon octicon-file-symlink-directory"></span>
         Open {{ repo.get 'location' }}
