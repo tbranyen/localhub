@@ -13,7 +13,7 @@ module.exports = function(server) {
     host = host || '127.0.0.1';
   }
   else if (process.env.NODE_ENV === 'test') {
-    host = host || '0.0.0.0';
+    host = host || '127.0.0.1';
   }
 
   // Serve static files locally during development.

@@ -13,6 +13,7 @@
 .repo-list-item {
   padding-left: 10px;
   padding-right: 10px;
+  transition: background linear .2s;
 }
 
 .repo-list-item:hover {
