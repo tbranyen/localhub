@@ -28,7 +28,7 @@
     "primer": "primer/primer",
     "timelinejs": "^2.35.6"
   },
-  "paths": {
+  "extensions": {
     "html": "combyne-amd-loader"
   },
   "shim": {
