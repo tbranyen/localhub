@@ -32,7 +32,7 @@ function recurseDirectory(filePath, done) {
 
       var normal = path.join(filePath, file);
 
-      if (file.indexOf('.') === 0 || file === 'tmp') {
+      if (file.indexOf('.') === 0 || file === 'tmp' || file === 'AppData') {
         return recurse();
       }
 
