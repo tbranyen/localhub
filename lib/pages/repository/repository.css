@@ -96,6 +96,8 @@
 
 .latest_commit {
   float: right;
+  position: relative;
+  top: -2px;
 }
 
 a.message {
@@ -105,4 +107,9 @@ a.message {
 span.date {
   color: #777;
   float: right;
+}
+
+.tabnav .down {
+  margin-left: 5px;
+  color: #7B7777;
 }

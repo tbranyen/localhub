@@ -1,0 +1,22 @@
+{%each . as entry%}
+<div class="menu-item" href="#repository/{{ model.get 'id' }}/blob/{{ model.get 'branch' }}/{{ entry.path }}">
+  <div class="container">
+    <div class="columns">
+      <div class="column one-third">
+        {%if entry.isDirectory%}
+        <span class="octicon octicon-file-directory"></span>
+        {%else%}
+        <span class="octicon octicon-file-text"></span>
+        {%endif%}
+
+        <a href="#">{{ entry.path }}</a>
+      </div>
+
+      <div class="column two-thirds">
+        <a href="#" class="message" title="{{ model.commit.oneline }}">{{ model.commit.oneline|slice 0 50 }}...</a>
+        <span class="date">{{ model.commit.get 'date' }}</span>
+      </div>
+    </div>
+  </div>
+</div>
+{%endeach%}

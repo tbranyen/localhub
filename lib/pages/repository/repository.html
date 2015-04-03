@@ -9,6 +9,14 @@
 </div>
 
 <div class="container">
+  <div class="tabnav">
+    <nav class="tabnav-tabs">
+      <a href="#" class="tabnav-tab selected">Working tree
+        <span class="down octicon octicon-triangle-down"></span>
+      </a>
+      <a href="#" class="tabnav-tab">Unstaged</a>
+    </nav>
+  </div>
   <div class="columns">
     <div class="three-fourths column">
       <nav class="menu files">
@@ -23,28 +31,8 @@
             <span class="octicon octicon-clippy"></span>
           </span>
         </div>
-        {%each model.get 'tree' as entry%}
-        <div class="menu-item" href="#repository/{{ model.get 'id' }}/blob/{{ model.get 'branch' }}/{{ entry.path }}">
-          <div class="container">
-            <div class="columns">
-              <div class="column one-third">
-                {%if entry.isDirectory%}
-                <span class="octicon octicon-file-directory"></span>
-                {%else%}
-                <span class="octicon octicon-file-text"></span>
-                {%endif%}
 
-                <a href="#">{{ entry.path }}</a>
-              </div>
-
-              <div class="column two-thirds">
-                <a href="#" class="message" title="{{ model.commit.oneline }}">{{ model.commit.oneline|slice 0 50 }}...</a>
-                <span class="date">{{ model.commit.get 'date' }}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        {%endeach%}
+        <div class="outlet"></div>
       </nav>
 
       <nav class="menu">

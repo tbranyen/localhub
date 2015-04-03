@@ -37,3 +37,10 @@ nav.menu {
 .commit_item button.code {
   width: 40px;
 }
+
+.commit_item .btn-group {
+  position: absolute;
+  top: 9px;
+  right: 9px;
+  float: right;
+}
