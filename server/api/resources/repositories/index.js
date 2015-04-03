@@ -12,6 +12,7 @@ var cache = require('./cache');
 
 var getCurrentBranchCommit = require('./git/get-current-branch-commit');
 var getCommitDetails = require('./git/get-commit-details');
+var getAllBranches = require('./git/get-all-branches');
 var getAllCommits = require('./git/get-all-commits');
 var getAllNotes = require('./git/get-all-notes');
 var getAllTags = require('./git/get-all-tags');
@@ -139,6 +140,10 @@ resource.get('/:id', function(req, res, next) {
       out.commits = commits.length;
     });
 
+    var allBranches = getAllBranches(repository).then(function(branches) {
+      out.branches = branches.length;
+    });
+
     var allTags = getAllTags(repository).then(function(tags) {
       out.tags = tags.length;
     });
@@ -151,6 +156,7 @@ resource.get('/:id', function(req, res, next) {
       allCommits,
       allTags,
       branchName,
+      allBranches,
     ]);
   }).then(function() {
     res.json(out);
