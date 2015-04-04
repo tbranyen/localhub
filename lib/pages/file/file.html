@@ -1,0 +1,39 @@
+<div class="header header-logged-in true" role="banner">
+  <div class="container clearfix">
+    <div>
+      <a href="#">All repositories</a>
+      <span class="octicon octicon-chevron-right sep"></span>
+      <a href="#repository/{{ model.id }}"><span class="count">{{ model.get 'name' }}</span></a>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="tabnav">
+    <nav class="tabnav-tabs">
+      <a href="#" class="tabnav-tab selected">Working tree
+        <span class="down octicon octicon-triangle-down"></span>
+      </a>
+      <a href="#" class="tabnav-tab">Unstaged</a>
+    </nav>
+  </div>
+  <div class="columns">
+    <div class="single-column column">
+      <nav class="menu files">
+        <a class="menu-item commit_message">
+          {{ model.get 'name' }}/{{ file }}
+        </a>
+        <div class="menu-item commit_details">
+          <img class="avatar avatar-small" src="http://www.gravatar.com/avatar/{{ model.commit.hash }}" width="20" height="20">
+          {{ model.commit.attributes.author.name }} <span class="commit_date">authored {{ model.commit.get 'date' }}</span>
+          <span class="latest_commit">
+            latest commit <span class="commit_sha">{{ model.commit.attributes.sha|slice 0 10 }}</span>
+            <span class="octicon octicon-clippy"></span>
+          </span>
+        </div>
+
+        <div class="outlet"></div>
+      </nav>
+    </div>
+  </div>
+</div>

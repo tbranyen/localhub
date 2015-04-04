@@ -1,0 +1,11 @@
+{%if model.get 'blob'%}
+<div class="menu-item code">
+  <div class="container">
+    <div class="columns">
+      <div class="column one-column">
+        <pre><code>{{{ model.get 'blob' }}}</code></pre>
+      </div>
+    </div>
+  </div>
+</div>
+{%endif%}

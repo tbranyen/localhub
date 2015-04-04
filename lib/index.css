@@ -8,6 +8,7 @@
 
 @import "/lib/components/repository-list/repository-list.css";
 @import "/lib/components/commits-list/commits-list.css";
+@import "/lib/components/file-blob/file-blob.css";
 
 .header {
   padding-top: 10px;
@@ -34,4 +35,8 @@
   position: relative;
   margin-left: 5px;
   margin-right: 5px;
+}
+
+.single-column {
+  width: 100%;
 }

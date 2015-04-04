@@ -11,10 +11,10 @@
   "devDependencies": {
     "combynexpress": "^0.6.3",
     "express": "^4.12.3",
+    "highlight.js": "^8.5.0",
     "homedir": "^0.6.0",
     "lodash": "^3.6.0",
     "nodegit": "^0.3.3",
-    "highlight.js": "^8.4.0",
     "remarkable": "^1.6.0"
   },
   "dependencies": {

@@ -30,7 +30,12 @@
         <a 
           class="{%if entry.isDirectory%}directory{%else%}file{%endif%}" 
           data-path="{{ entry.absolute }}"
+
+          {%if entry.isDirectory%}
           href="#repository/{{ collection.repo.id }}/{{ collection.repo.get 'branch' }}/tree/{{ entry.absolute }}">
+          {%else%}
+          href="#repository/{{ collection.repo.id }}/{{ collection.repo.get 'branch' }}/blob/{{ entry.absolute }}">
+          {%endif%}
             {{ entry.path }}
         </a>
       </div>

@@ -98,6 +98,29 @@ resource.get('/:id/:branch/commits', function(req, res, next) {
 });
 
 /**
+ * Get a file at a specific path.
+ */
+resource.get('/:id/:branch/blob/*', function(req, res, next) {
+  var repo = cache.get(req.params.id);
+  var path = req.url.split('/').slice(4).join('/');
+  var out = {};
+
+  Git.Repository.open(repo.location)
+    .then(getCurrentBranchCommit)
+    .then(function(currentBranchCommit) {
+      return currentBranchCommit.getEntry(path);
+    })
+    .then(function(entry) {
+      return entry.getBlob();
+    })
+    .then(function(blob) {
+      out.blob = hljs.highlightAuto(blob.toString()).value;
+
+      res.json(out);
+    }, next);
+});
+
+/**
  * Get a tree at a specific path.
  */
 resource.get('/:id/:branch/tree/*', function(req, res, next) {
