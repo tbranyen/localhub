@@ -1,6 +1,5 @@
 .code {
   background-color: #FFF;
-  padding: 20px;
   overflow-x: auto;
 }
 
@@ -10,4 +9,33 @@
 
 code {
   line-height: 17px;
+  width: 100%;
+}
+
+pre {
+	counter-reset: linecounter;
+  width: 100%;
+}
+pre .line {
+	counter-increment: linecounter;
+  transition: background-color ease-in .2s;
+  width: 100%;
+}
+pre .line:before {
+  padding-top: 3px;
+	content: counter(linecounter);
+	width: 2em;
+	display: inline-block;
+  padding-right: 8px;
+  margin-right: 8px;
+  text-align: right;
+	border-right: 1px solid #D7D7D7;
+  color: #A6A6A6;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: pointer;
+}
+
+.line:hover {
+  background-color: #FFF6CB;
 }
