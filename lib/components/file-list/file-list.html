@@ -1,5 +1,23 @@
-{%each . as entry%}
-<div class="menu-item" href="#repository/{{ model.get 'id' }}/blob/{{ model.get 'branch' }}/{{ entry.path }}">
+{%if collection.length%}
+{%if collection.models.0.get 'root'%}
+<div class="menu-item">
+  <div class="container">
+    <div class="columns">
+      <div class="column one-column">
+        <span class="octicon octicon-file-directory"></span>
+        <a 
+          class="directory"
+          data-path="{{ collection.models.0.attributes.root|up }}"
+          href="#repository/{{ collection.repo.id }}/{{ collection.repo.get 'branch' }}/tree/{{ collection.models.0.attributes.root|up }}">../</a>
+      </div>
+    </div>
+  </div>
+</div>
+{%endif%}
+{%endif%}
+
+{%each collection.toJSON as entry%}
+<div class="menu-item">
   <div class="container">
     <div class="columns">
       <div class="column one-third">
@@ -9,7 +27,12 @@
         <span class="octicon octicon-file-text"></span>
         {%endif%}
 
-        <a href="#">{{ entry.path }}</a>
+        <a 
+          class="{%if entry.isDirectory%}directory{%else%}file{%endif%}" 
+          data-path="{{ entry.absolute }}"
+          href="#repository/{{ collection.repo.id }}/{{ collection.repo.get 'branch' }}/tree/{{ entry.absolute }}">
+            {{ entry.path }}
+        </a>
       </div>
 
       <div class="column two-thirds">

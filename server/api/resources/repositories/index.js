@@ -12,6 +12,7 @@ var cache = require('./cache');
 
 var getCurrentBranchCommit = require('./git/get-current-branch-commit');
 var getCommitDetails = require('./git/get-commit-details');
+var normalizeEntries = require('./git/normalize-entries');
 var getAllBranches = require('./git/get-all-branches');
 var getAllCommits = require('./git/get-all-commits');
 var getAllNotes = require('./git/get-all-notes');
@@ -97,6 +98,29 @@ resource.get('/:id/:branch/commits', function(req, res, next) {
 });
 
 /**
+ * Get a tree at a specific path.
+ */
+resource.get('/:id/:branch/tree/*', function(req, res, next) {
+  var repo = cache.get(req.params.id);
+  var path = req.url.split('/').slice(4).join('/');
+
+  Git.Repository.open(repo.location)
+    .then(getCurrentBranchCommit)
+    .then(function(currentBranchCommit) {
+      if (path) {
+        return currentBranchCommit.getEntry(path);
+      }
+
+      return currentBranchCommit;
+    })
+    .then(getTree)
+    .then(normalizeEntries(path))
+    .then(function(entries) {
+      res.json(entries);
+    }, next);
+});
+
+/**
  * Get a specific repository's metadata.
  */
 resource.get('/:id', function(req, res, next) {
@@ -119,10 +143,6 @@ resource.get('/:id', function(req, res, next) {
     // Attach the branch name.
     var branchName = repository.getCurrentBranch().then(function(branch) {
       out.branch = branch.name().slice('refs/heads/'.length);
-    });
-
-    var tree = currentBranchCommit.then(getTree).then(function(entries) {
-      out.tree = entries;
     });
 
     var readme = currentBranchCommit.then(getREADME).then(function(blob) {
@@ -151,7 +171,6 @@ resource.get('/:id', function(req, res, next) {
     });
 
     return Promise.all([
-      tree,
       readme,
       commitDetails,
       allNotes,
@@ -162,9 +181,7 @@ resource.get('/:id', function(req, res, next) {
     ]);
   }).then(function() {
     res.json(out);
-  }).catch(function(ex) {
-    next(ex);
-  });
+  }, next);
 });
 
 module.exports = resource;

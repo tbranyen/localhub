@@ -4,7 +4,6 @@ function getREADME(commit) {
   }).then(function(treeEntry) {
     return treeEntry.getBlob();
   }).catch(function(ex) {
-    console.log(ex.stack);
     return 'No README found.';
   });
 }
