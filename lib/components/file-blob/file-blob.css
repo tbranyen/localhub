@@ -20,6 +20,7 @@ pre .line {
 	counter-increment: linecounter;
   transition: background-color ease-in .2s;
   width: 100%;
+  white-space: nowrap;
 }
 pre .line:before {
   padding-top: 3px;
