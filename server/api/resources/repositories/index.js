@@ -63,6 +63,8 @@ resource.get('/open', function(req, res) {
     // Windows.
     'explorer ' + req.query.path
   ].join(' || '));
+
+  res.end();
 });
 
 /**
