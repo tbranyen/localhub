@@ -6,7 +6,7 @@
     <p>{{ commit.attributes.author.name }} authored {{ commit.get 'date' }}</p>
 
     <div class="btn-group">
-      <button class="btn btn-outline sha" type="button">{{ commit.attributes.sha|slice 0 12 }}</button>
+      <button class="btn btn-outline sha" type="button" data-full="{{ commit.get 'sha' }}">{{ commit.attributes.sha|slice 0 12 }}</button>
       <button class="btn btn-outline code" type="button"><span class="octicon octicon-code"></span></button>
     </div>
   </a>
