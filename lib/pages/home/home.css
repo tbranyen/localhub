@@ -27,7 +27,7 @@ input[type=text] {
   background-color: #80A6CD;
 }
 
-.header .state + .label {
+.header .label {
   opacity: 0; 
   transition: opacity linear .2s;
 }
