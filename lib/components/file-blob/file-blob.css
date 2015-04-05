@@ -39,11 +39,17 @@ pre .line:before {
   text-align: right;
 	border-right: 1px solid #EEEEEE;
   color: #A6A6A6;
+  -ms-user-select: none;
+  -moz-user-select: none;
   -webkit-user-select: none;
   user-select: none;
   cursor: pointer;
 }
 
-.line:hover {
+.line.active, .line:hover {
   background-color: #FFF6CB;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
