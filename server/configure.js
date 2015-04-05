@@ -3,10 +3,11 @@ const path = require('path');
 const express = require('express');
 const combynExpress = require('combynexpress');
 
+var local = path.join.bind(path, __dirname);
+
 module.exports = function(server) {
   var port = process.env.PORT || 8000;
   var host = process.env.HOST;
-  var local = path.join.bind(path, __dirname);
 
   server.staticFiles = [
     'package.json',

@@ -12,10 +12,23 @@ input[type=text] {
   cursor: pointer;
 }
 
+.label, .state {
+  float: right;
+  margin-top: 9px;
+  margin-right: 15px;
+}
+
+.label {
+  padding-top: 5px;
+  margin-right: 10px;
+  color: #B8B8B8;
+}
+
 .sync {
   float: right;
   margin-top: 10px;
 }
+
 
 .sync:after {
   content: "Sync";

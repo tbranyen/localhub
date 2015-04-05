@@ -13,7 +13,7 @@ main.commits-page .header {
   width: 100%;
   margin-top: 20px !important;
   margin-bottom: 20px !important;
-  height: 207px !important;
+  height: 207px;
   border: 10px solid #F7F7F7 !important;
   border-radius: 5px !important;
   position: fixed !important;
