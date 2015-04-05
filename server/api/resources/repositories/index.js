@@ -114,7 +114,7 @@ resource.get('/:id/:branch/blob/*', function(req, res, next) {
       return entry.getBlob();
     })
     .then(function(blob) {
-      out.blob = hljs.highlightAuto(blob.toString()).value;
+      out.blob = hljs.highlightAuto(blob.toString()).value.trim();
 
       out.blob = out.blob.split('\n').map(function(line) {
         return '<div class="line">' + line + '</div>';
