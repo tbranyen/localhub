@@ -38,10 +38,11 @@
 }
 
 .sep {
-  top: 1px;
+  top: 0px;
   position: relative;
   margin-left: 5px;
   margin-right: 5px;
+  color: #7B7777;
 }
 
 .single-column {
