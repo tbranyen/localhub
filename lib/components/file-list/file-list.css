@@ -1,0 +1,16 @@
+.path {
+  background: #80A6CD;
+  padding: 10px;
+}
+
+.path .btn {
+  color: #FFF;
+}
+
+.path .btn:hover {
+  color: #333;
+}
+
+.sep {
+  color: #FFF;
+}

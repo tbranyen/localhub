@@ -131,6 +131,10 @@ resource.get('/:id/:branch/tree/*', function(req, res, next) {
   var repo = cache.get(req.params.id);
   var path = req.url.split('/').slice(4).join('/');
 
+  if (path.slice(-1) === '/') {
+    path = path.slice(0, -1);
+  }
+
   Git.Repository.open(repo.location)
     .then(getCurrentBranchCommit)
     .then(function(currentBranchCommit) {

@@ -1,6 +1,16 @@
 {%if collection.length%}
+<div class="path">
+{%each collection.models.0.attributes.root|buttons as path%}
+  <a
+  href="#repository/{{ collection.repo.id }}/{{ collection.repo.get 'branch' }}/tree/{{ path.abs }}"
+  data-path="{{ path.abs }}"
+  class="btn btn-path btn-sm directory">{{ path.rel }}</a>
+  <span class="sep">/</span>
+{%endeach%}
+</div>
+
 <a class="menu-item commit_message">
-  {{ collection.models.0.attributes.root|buttons }}<span class="sep">/</span>
+  {{ model.commit.oneline }}
 </a>
 
 {%if collection.models.0.get 'root'%}

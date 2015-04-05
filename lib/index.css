@@ -12,6 +12,7 @@
 @import "/lib/components/repository-list/repository-list.css";
 @import "/lib/components/commits-list/commits-list.css";
 @import "/lib/components/file-blob/file-blob.css";
+@import "/lib/components/file-list/file-list.css";
 
 .header {
   padding-top: 0;
@@ -37,7 +38,6 @@
 }
 
 .sep {
-  color: #CCC;
   top: 1px;
   position: relative;
   margin-left: 5px;
