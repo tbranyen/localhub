@@ -21,12 +21,14 @@ pre {
 	counter-reset: linecounter;
   width: 100%;
 }
+
 pre .line {
 	counter-increment: linecounter;
   transition: background-color ease-in .2s;
   width: 100%;
   white-space: pre;
 }
+
 pre .line:before {
   padding-top: 3px;
 	content: counter(linecounter);
@@ -35,7 +37,7 @@ pre .line:before {
   padding-right: 8px;
   margin-right: 8px;
   text-align: right;
-	border-right: 1px solid #D7D7D7;
+	border-right: 1px solid #EEEEEE;
   color: #A6A6A6;
   -webkit-user-select: none;
   user-select: none;

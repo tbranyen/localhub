@@ -1,6 +1,8 @@
 @import "/node_modules/primer/css/primer.css";
 @import "/node_modules/octicons/octicons/octicons.css";
 @import "/node_modules/highlight.js/styles/github.css";
+@import "/node_modules/bootstrap-social/bootstrap-social.css";
+@import "/node_modules/font-awesome/css/font-awesome.css";
 
 @import "/lib/pages/home/home.css";
 @import "/lib/pages/repository/repository.css";
