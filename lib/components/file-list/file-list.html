@@ -1,5 +1,18 @@
 {%if collection.length%}
+<a class="menu-item commit_message">
+  {{ collection.models.0.attributes.root|buttons }}<span class="sep">/</span>
+</a>
+
 {%if collection.models.0.get 'root'%}
+<div class="menu-item commit_details">
+  <img class="avatar avatar-small" src="http://www.gravatar.com/avatar/{{ model.commit.hash }}" width="20" height="20">
+  {{ model.commit.attributes.author.name }} <span class="commit_date">authored {{ model.commit.get 'date' }}</span>
+  <span class="latest_commit">
+    latest commit <span class="commit_sha">{{ model.commit.attributes.sha|slice 0 10 }}</span>
+    <span class="octicon octicon-clippy"></span>
+  </span>
+</div>
+
 <div class="menu-item">
   <div class="container">
     <div class="columns">
