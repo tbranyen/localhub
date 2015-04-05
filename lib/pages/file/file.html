@@ -22,8 +22,21 @@
   <div class="columns">
     <div class="single-column column">
       <nav class="menu files">
+        <div class="path">
+        {%each model.file.path|buttons as path%}
+          {%if path.isFile%}
+            <span class="file-name">{{path.rel}}</span>
+          {%else%}
+            <a
+            href="#repository/{{ model.id }}/{{ model.get 'branch' }}/tree/{{ path.abs }}"
+            data-path="{{ path.abs }}"
+            class="btn btn-path btn-sm directory">{{ path.rel }}</a>
+            <span class="sep">/</span>
+          {%endif%}
+        {%endeach%}
+        </div>
         <a class="menu-item commit_message">
-          {{ model.attributes.name|buttons }}<span class="sep">/</span>{{ file|buttons true}}
+          {{ model.commit.oneline }}
         </a>
         <div class="menu-item commit_details">
           <img class="avatar avatar-small" src="http://www.gravatar.com/avatar/{{ model.commit.hash }}" width="20" height="20">
