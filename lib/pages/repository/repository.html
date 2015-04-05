@@ -1,12 +1,27 @@
 <div class="header header-logged-in true" role="banner">
   <div class="container clearfix">
-    <div>
-      <a href="#">All repositories</a>
-      <span class="octicon octicon-chevron-right sep"></span>
-      <a href="#repository/{{ model.id }}"><span class="count">{{ model.get 'name' }}</span></a>
-    </div>
+    <a class="btn btn-primary btn-block btn-social btn-github">
+      <i class="fa fa-github"></i> Sign in with GitHub
+    </a>
+
+    <button class="btn btn-primary sync" type="button">
+      <span class="octicon octicon-sync"></span>
+    </button>
+
+    {%if p2p.id%}<span class="state">{{ p2p.id }}</span>{%endif%}
+    <strong class="label">&laquo; Peer ID</strong>
   </div>
 </div>
+
+<div class="container clearfix">
+  <div>
+    <a href="#">All repositories</a>
+    <span class="octicon octicon-chevron-right sep"></span>
+    <a href="#repository/{{ model.id }}"><span class="count">{{ model.get 'name' }}</span></a>
+  </div>
+</div>
+
+<hr>
 
 <div class="container">
   <div class="tabnav">

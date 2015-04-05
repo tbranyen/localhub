@@ -23,10 +23,21 @@ input[type=text] {
 .header .state {
   margin-top: 10px;
   line-height: 26px;
+  cursor: pointer;
+  background-color: #80A6CD;
+}
+
+.header .state + .label {
+  opacity: 0; 
+  transition: opacity linear .2s;
+}
+
+.header .state:hover + .label {
+  opacity: 1;
 }
 
 .label, .state {
-  float: right;
+  float: left;
   margin-top: 9px;
   margin-right: 10px;
 }

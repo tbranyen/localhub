@@ -8,15 +8,18 @@
       <span class="octicon octicon-sync"></span>
     </button>
 
-    <span class="state">{{ p2p.id }}</span>
-    <strong class="label">Peer ID</strong>
-
-    <h4><span class="count">{{ collection.length }}</span> repositories found</h4>
-
+    {%if p2p.id%}<span class="state">{{ p2p.id }}</span>{%endif%}
+    <strong class="label">&laquo; Peer ID</strong>
   </div>
 </div>
 
 <div class="container">
+  <center>
+    <h1>
+      <span class="count">{{ collection.length }}</span> repositories found
+    </h1>
+  </center>
+
   <form>
     <input class="input-large search" type="text" placeholder="Search...">
   </form>
