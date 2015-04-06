@@ -8,7 +8,7 @@
       <span class="octicon octicon-sync"></span>
     </button>
 
-    {%if p2p.id%}<span class="state">{{ p2p.id }}</span>{%endif%}
+    <span class="state">{%if p2p.id%}{{ p2p.id }}{%else%}Not connected{%endif%}</span>
     <strong class="label">&laquo; Peer ID</strong>
   </div>
 </div>
