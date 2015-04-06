@@ -32,7 +32,7 @@ pre .line {
 pre .line:before {
   padding-top: 3px;
 	content: counter(linecounter);
-	width: 2em;
+	width: 3em;
 	display: inline-block;
   padding-right: 8px;
   margin-right: 8px;
