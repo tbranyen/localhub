@@ -13,6 +13,7 @@ module.exports = function(server) {
     'package.json',
     'lib',
     'dist',
+    'views',
     'themes',
     'node_modules'
   ];

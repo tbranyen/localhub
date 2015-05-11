@@ -17,6 +17,7 @@ var getAllBranches = require('./git/get-all-branches');
 var getAllCommits = require('./git/get-all-commits');
 var getAllNotes = require('./git/get-all-notes');
 var getAllTags = require('./git/get-all-tags');
+var getBranch = require('./git/get-branch');
 var getREADME = require('./git/get-readme');
 var getTree = require('./git/get-tree');
 
@@ -95,6 +96,27 @@ resource.get('/:id/:branch/commits', function(req, res, next) {
         return details;
       }));
     });
+});
+
+/**
+ * Get a raw file at a specific path.
+ */
+resource.get('/:id/:branch/raw/*', function(req, res, next) {
+  var repo = cache.get(req.params.id);
+  var path = req.url.split('/').slice(4).join('/');
+  var out = {};
+
+  Git.Repository.open(repo.location)
+    .then(getBranch(req.params.branch))
+    .then(function(branchCommit) {
+      return branchCommit.getEntry(path);
+    })
+    .then(function(entry) {
+      return entry.getBlob();
+    })
+    .then(function(blob) {
+      res.end(blob.toString());
+    }, next);
 });
 
 /**
