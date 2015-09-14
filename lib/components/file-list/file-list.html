@@ -7,6 +7,14 @@
   class="btn btn-path btn-sm directory">{{ path.rel }}</a>
   <span class="sep">/</span>
 {%endeach%}
+
+  <div class="switch">
+    <input id="cmn-toggle-4" class="cmn-toggle cmn-toggle-round-flat" type="checkbox" 
+    
+    {%if showHidden%}checked="checked"{%endif%}>
+    <label for="cmn-toggle-4"></label>
+    <div class="text">Show Ignored</div>
+  </div>
 </div>
 
 <a class="menu-item commit_message">
@@ -40,7 +48,7 @@
 {%endif%}
 
 {%each collection.toJSON as entry%}
-<div class="menu-item">
+<div class="menu-item {%if entry.isIgnored%}ignored{%endif%} {{ entry.absolute|getDiff collection.repo }}">
   <div class="container">
     <div class="columns">
       <div class="column one-third">

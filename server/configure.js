@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const express = require('express');
 const combynExpress = require('combynexpress');
+const livereload = require('express-livereload');
 
 var local = path.join.bind(path, __dirname);
 
@@ -23,6 +24,8 @@ module.exports = function(server) {
   }
   else if (process.env.NODE_ENV === 'test') {
     host = host || '127.0.0.1';
+
+    livereload(server, { watchDir: [local('../dist/')] });
   }
 
   // Serve static files locally during development.

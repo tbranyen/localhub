@@ -1,6 +1,7 @@
 .path {
   background: #80A6CD;
   padding: 10px;
+  -webkit-user-select: none;
 }
 
 .path .btn {
@@ -15,3 +16,44 @@
   color: #FFF;
   top: 2px;
 }
+
+.menu-item.added { background-color: #E2FFD0; }
+.menu-item.deleted { background-color: #FFD5D0; }
+.menu-item.modified { background-color: #FFEAD0; }
+.menu-item.ignored {
+  height: 35px;
+}
+
+.menu-item.ignored .container {
+  opacity: .3;
+}
+
+.menu:not(.show-hidden) .menu-item.ignored {
+  height: 0px;
+  overflow: hidden;
+  padding: 0;
+  margin 0;
+  border: 0;
+}
+
+.switch {
+  display: table-cell;
+  vertical-align: middle;
+  padding: 10px;
+  width: 100px;
+  position: relative;
+  float: right;
+}
+
+.switch .text {
+  -webkit-user-select: none;
+  cursor: pointer;
+  position: absolute;
+  top: 8px;
+  font-size: 9px;
+  left: 30px;
+  color: #FFF;
+  font-weight: bold;
+}
+
+.switch * { cursor: pointer; }

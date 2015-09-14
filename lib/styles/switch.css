@@ -1,0 +1,42 @@
+input.cmn-toggle-round-flat + label {
+  padding: 0px;
+  width: 120px;
+  height: 20px;
+  background-color: #dddddd;
+  border-radius: 60px;
+  transition: background 0.4s;
+}
+input.cmn-toggle-round-flat + label:before,
+input.cmn-toggle-round-flat + label:after {
+  display: block;
+  position: absolute;
+  content: "";
+}
+input.cmn-toggle-round-flat + label:before {
+  top: 2px;
+  left: 2px;
+  bottom: 2px;
+  right: 2px;
+  height: 24px;
+  background-color: #6384CB;
+  border-radius: 60px;
+  transition: background 0.4s;
+}
+input.cmn-toggle-round-flat + label:after {
+  top: 4px;
+  left: 4px;
+  bottom: 4px;
+  width: 22px;
+  height: 20px;
+  background-color: #dddddd;
+  border-radius: 52px;
+  transition: width 0.4s, margin 0.4s, background 0.4s;
+}
+input.cmn-toggle-round-flat:checked + label {
+  background-color: #8ce196;
+}
+input.cmn-toggle-round-flat:checked + label:after {
+  margin-left: 17px;
+  width: 75px;
+  background-color: #8ce196;
+}

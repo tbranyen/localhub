@@ -11,6 +11,10 @@
 <body>
   <main role="main"></main>
 
-  <script src="/node_modules/amd.js/amd.js" data-main="/lib/index"></script>
+  <script src="/dist/localhub.js"></script>
+
+  {%if env == 'test'%}
+    {{{LRScript}}}
+  {%endif%}
 </body>
 </html>

@@ -1,4 +1,4 @@
-@import "/node_modules/primer/css/primer.css";
+@import "/node_modules/primer-css/css/primer.css";
 @import "/node_modules/octicons/octicons/octicons.css";
 @import "/node_modules/highlight.js/styles/github.css";
 @import "/node_modules/bootstrap-social/bootstrap-social.css";
@@ -14,6 +14,8 @@
 @import "/lib/components/commits-list/commits-list.css";
 @import "/lib/components/file-blob/file-blob.css";
 @import "/lib/components/file-list/file-list.css";
+
+@import "/lib/styles/switch.css";
 
 .header {
   padding-top: 0;

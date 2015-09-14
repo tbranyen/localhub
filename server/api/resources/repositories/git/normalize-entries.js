@@ -8,6 +8,7 @@ function normalizeEntries(root) {
       entry.root = root;
       entry.absolute = normalized;
       entry.path = root ? normalized.slice(root.length + 1) : entry.path;
+
       return entry;
     });
   };

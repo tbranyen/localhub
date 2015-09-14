@@ -22,5 +22,7 @@ app.use(function(req, res, next) {
 
   if (match) { return next(); }
 
+  res.locals.env = process.env.NODE_ENV;
+
   res.render('index');
 });

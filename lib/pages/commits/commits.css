@@ -1,5 +1,7 @@
 main.commits-page {
-  padding-top: 282px;
+  padding-top: 72px;
+  /* Timeline is currently busted. */
+  /*padding-top: 282px;*/
 }
 
 main.commits-page .header {

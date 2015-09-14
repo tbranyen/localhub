@@ -1,7 +1,5 @@
-define(function(require, exports, module) {
-  'use strict';
+'use strict';
 
-  module.exports = function(val) {
-    return val.split('/').slice(0, -1).join('/');
-  };
-});
+module.exports = function(val) {
+  return val.split('/').slice(0, -1).join('/');
+};

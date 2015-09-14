@@ -1,26 +1,24 @@
-define(function(require, exports, module) {
-  'use strict';
+'use strict';
 
-  module.exports = function(val, hasFile) {
-    var abs = '';
+module.exports = function(val, hasFile) {
+  var abs = '';
 
-    var btns = val
-      .split('/')
-      .filter(Boolean).map(function(val, index, list) {
-        abs += val + '/';
+  var btns = val
+    .split('/')
+    .filter(Boolean).map(function(val, index, list) {
+      abs += val + '/';
 
-        var basedir = abs.split('/');
-        basedir.pop();
+      var basedir = abs.split('/');
+      basedir.pop();
 
-        var retVal = { rel: val, abs: basedir.join('/') + '/' };
+      var retVal = { rel: val, abs: basedir.join('/') + '/' };
 
-        if (index === list.length - 1) {
-          retVal.isFile = true;
-        }
+      if (index === list.length - 1) {
+        retVal.isFile = true;
+      }
 
-        return retVal;
-      });
+      return retVal;
+    });
 
-    return [{ rel: '.', abs: '' }].concat(btns);
-  };
-});
+  return [{ rel: '.', abs: '' }].concat(btns);
+};
