@@ -2,6 +2,8 @@
   background-color: #F8F8F8;
 }
 
+.branch { border: none; }
+
 .readme {
   background-color: #FFFFFF;
   padding: 20px;

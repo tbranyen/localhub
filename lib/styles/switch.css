@@ -28,7 +28,7 @@ input.cmn-toggle-round-flat + label:after {
   bottom: 4px;
   width: 22px;
   height: 20px;
-  background-color: #dddddd;
+  background-color: #EEE;
   border-radius: 52px;
   transition: width 0.4s, margin 0.4s, background 0.4s;
 }
@@ -38,5 +38,5 @@ input.cmn-toggle-round-flat:checked + label {
 input.cmn-toggle-round-flat:checked + label:after {
   margin-left: 17px;
   width: 75px;
-  background-color: #8ce196;
+  background-color: #81D364;
 }

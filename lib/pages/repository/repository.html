@@ -13,10 +13,19 @@
 <div class="container">
   <div class="tabnav">
     <nav class="tabnav-tabs">
-      <a href="#" class="tabnav-tab selected">Working tree
+      <a class="tabnav-tab selected">{%--Working tree
+        
         <span class="down octicon octicon-triangle-down"></span>
+        --%}
+
+        <select class="branch" placeholder="Select a branch">
+          <option value="~workdir">Working directory</option>
+
+          {%each model.get 'branches' as branch%}
+          <option {%if model.attributes.branch == branch|stripRef%}selected{%endif%} value="{{ branch|stripRef }}">{{ branch|stripRef }}</option>
+          {%endeach%}
+        </select>
       </a>
-      <a href="#" class="tabnav-tab">Unstaged</a>
       <a href="#" class="tabnav-tab">Stashed</a>
     </nav>
   </div>
@@ -44,7 +53,7 @@
         </a>
         <a class="menu-item" href="#">
           <span class="octicon octicon-git-branch"></span>
-          <span class="counter">{{ model.get 'branches' }}</span>
+          <span class="counter">{{ model.attributes.branches.length }}</span>
           Branches
         </a>
         <a class="menu-item" href="#">

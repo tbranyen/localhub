@@ -247,7 +247,7 @@ resource.get('/:id', function(req, res, next) {
 
     // Attach the branch name.
     var branchName = repository.getCurrentBranch().then(function(branch) {
-      out.branch = branch.name().slice('refs/heads/'.length);
+      //out.branch = branch.name().slice('refs/heads/'.length);
       out.branch = '~workdir';
     });
 
@@ -261,7 +261,7 @@ resource.get('/:id', function(req, res, next) {
       });
 
     var allNotes = getAllNotes(repository).then(function(notes) {
-      out.notes = notes.length;
+      out.notes = notes ? notes.length : 0;
     });
 
     var allCommits = getAllCommits()(repository).then(function(commits) {
@@ -269,7 +269,7 @@ resource.get('/:id', function(req, res, next) {
     });
 
     var allBranches = getAllBranches(repository).then(function(branches) {
-      out.branches = branches.length;
+      out.branches = branches || [];
     });
 
     var allTags = getAllTags(repository).then(function(tags) {

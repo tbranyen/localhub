@@ -59,7 +59,11 @@
         {%endif%}
 
         <a 
-          class="{%if entry.isDirectory%}directory{%else%}file{%endif%}" 
+          class="{%if entry.isDirectory%}directory{%else%}file{%endif%}
+                 {%if entry.absolute|getDiff collection.repo != ''%} tooltipped tooltipped-n{%endif%}" 
+          {%if entry.absolute|getDiff collection.repo != ''%}
+          aria-label="{{ entry.absolute|getDiff collection.repo|toTitleCase }}"
+          {%endif%}
           data-path="{{ entry.absolute }}"
 
           {%if entry.isDirectory%}
