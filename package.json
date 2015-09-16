@@ -6,8 +6,8 @@
   "scripts": {
     "start": "NODE_ENV=test node server",
     "build": "npm run browserify",
-    "browserify": "browserify lib/index.js -o dist/localhub.js",
-    "watchify": "watchify -d lib/index.js -o dist/localhub.js -v"
+    "browserify": "browserify client/index.js -o dist/localhub.js",
+    "watchify": "watchify -d client/index.js -o dist/localhub.js -v"
   },
   "author": "Tim Branyen (@tbranyen)",
   "license": "MIT",

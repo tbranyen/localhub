@@ -12,7 +12,7 @@ module.exports = function(server) {
 
   server.staticFiles = [
     'package.json',
-    'lib',
+    'client',
     'dist',
     'views',
     'themes',

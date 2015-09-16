@@ -162,7 +162,9 @@ resource.get('/:id/:branch/tree/*', function(req, res, next) {
 
   var resolveBranchCommit = function(currentBranchCommit) {
     if (root) {
-      return currentBranchCommit.getEntry(root);
+      return currentBranchCommit.getEntry(root).catch(function() {
+        return currentBranchCommit;
+      });
     }
 
     return currentBranchCommit;
@@ -175,14 +177,14 @@ resource.get('/:id/:branch/tree/*', function(req, res, next) {
     .then(function(tree) {
       if (req.params.branch === '~workdir') {
         return new Promise(function(resolve, reject) {
-          fs.readdir(repo.location, function(err, list) {
+          fs.readdir(path.join(repo.location, root), function(err, list) {
             if (err) throw err;
 
             var entries = list.map(function(entry) {
               //{ isDirectory: true, path: 'build', root: '', absolute: 'build' }
               return {
                 isDirectory: function() {
-                  return fs.statSync(path.join(repo.location, entry)).isDirectory();
+                  return fs.statSync(path.join(repo.location, root, entry)).isDirectory();
                 },
 
                 path: function() {
