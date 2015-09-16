@@ -1,28 +1,28 @@
-var fs = require('fs');
-var path = require('path');
-var exec = require('child_process').exec;
-var express = require('express');
-var resource = express();
-var _ = require('lodash');
-var Git = require('nodegit');
-var Remarkable = require('remarkable');
-var hljs = require('highlight.js');
-var homedir = require('homedir');
-var moment = require('moment');
+const fs = require('fs');
+const path = require('path');
+const exec = require('child_process').exec;
+const express = require('express');
+const resource = express();
+const _ = require('lodash');
+const Git = require('nodegit');
+const Remarkable = require('remarkable');
+const hljs = require('highlight.js');
+const homedir = require('homedir');
+const moment = require('moment');
 
-var cache = require('./cache');
+const cache = require('./cache');
 
-var getCurrentBranchCommit = require('./git/get-current-branch-commit');
-var getCommitDetails = require('./git/get-commit-details');
-var normalizeEntries = require('./git/normalize-entries');
-var getAllBranches = require('./git/get-all-branches');
-var getAllCommits = require('./git/get-all-commits');
-var getAllNotes = require('./git/get-all-notes');
-var getTreeDiff = require('./git/get-tree-diff');
-var getAllTags = require('./git/get-all-tags');
-var getBranch = require('./git/get-branch');
-var getREADME = require('./git/get-readme');
-var getTree = require('./git/get-tree');
+const getCurrentBranchCommit = require('./git/get-current-branch-commit');
+const getCommitDetails = require('./git/get-commit-details');
+const normalizeEntries = require('./git/normalize-entries');
+const getAllBranches = require('./git/get-all-branches');
+const getAllCommits = require('./git/get-all-commits');
+const getAllNotes = require('./git/get-all-notes');
+const getTreeDiff = require('./git/get-tree-diff');
+const getAllTags = require('./git/get-all-tags');
+const getBranch = require('./git/get-branch');
+const getREADME = require('./git/get-readme');
+const getTree = require('./git/get-tree');
 
 var defaultPath = homedir();
 
@@ -106,13 +106,13 @@ resource.get('/:id/:branch/commits', function(req, res, next) {
  */
 resource.get('/:id/:branch/raw/*', function(req, res, next) {
   var repo = cache.get(req.params.id);
-  var path = req.url.split('/').slice(4).join('/');
+  var entryPath = req.url.split('/').slice(4).join('/');
   var out = {};
 
   Git.Repository.open(repo.location)
     .then(getBranch(req.params.branch))
     .then(function(branchCommit) {
-      return branchCommit.getEntry(path);
+      return branchCommit.getEntry(entryPath);
     })
     .then(function(entry) {
       return entry.getBlob();
@@ -127,19 +127,36 @@ resource.get('/:id/:branch/raw/*', function(req, res, next) {
  */
 resource.get('/:id/:branch/blob/*', function(req, res, next) {
   var repo = cache.get(req.params.id);
-  var path = req.url.split('/').slice(4).join('/');
+  var entryPath = req.url.split('/').slice(4).join('/');
   var out = {};
 
   Git.Repository.open(repo.location)
     .then(getCurrentBranchCommit)
     .then(function(currentBranchCommit) {
-      return currentBranchCommit.getEntry(path);
+      return currentBranchCommit.getEntry(entryPath);
     })
     .then(function(entry) {
       return entry.getBlob();
     })
+    .catch(function(err) {
+      if (req.params.branch === '~workdir') {
+        return new Promise(function(resolve, reject) {
+          fs.readFile(path.join(repo.location, entryPath), function(err, buffer) {
+            if (err) { reject(err); }
+            else { resolve(buffer); }
+          });
+        });
+      }
+
+      throw err;
+    })
     .then(function(blob) {
-      out.blob = hljs.highlightAuto(blob.toString()).value.trim();
+      if (blob.length < 2048) {
+        out.blob = hljs.highlightAuto(blob.toString()).value.trim();
+      }
+      else {
+        out.blob = blob.toString().trim();
+      }
 
       out.blob = out.blob.split('\n').map(function(line) {
         return '<div class="line">' + line + '</div>';
@@ -181,14 +198,13 @@ resource.get('/:id/:branch/tree/*', function(req, res, next) {
             if (err) throw err;
 
             var entries = list.map(function(entry) {
-              //{ isDirectory: true, path: 'build', root: '', absolute: 'build' }
               return {
                 isDirectory: function() {
                   return fs.statSync(path.join(repo.location, root, entry)).isDirectory();
                 },
 
                 path: function() {
-                  return entry;
+                  return path.join(root, entry);
                 }
               };
             });
@@ -211,7 +227,7 @@ resource.get('/:id/:branch/tree/*', function(req, res, next) {
         return {
           isDirectory: entry.isDirectory(),
           path: entry.path(),
-          isIgnored: Git.Ignore.pathIsIgnored(tree.repo, entry.path())
+          isIgnored: Boolean(Git.Ignore.pathIsIgnored(tree.repo, entry.path()))
         };
       });
 
