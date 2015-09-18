@@ -1,18 +1,25 @@
 'use strict';
 
-var WebApp = require('webapp');
-var template = require('./file.html');
+import WebApp from 'webapp';
+import template from './file.html';
 
-var Repository = require('../../resources/repository');
-var FileBlob = require('../../components/file-blob/file-blob');
-
+import Repository from '../../resources/repository';
+import FileBlob from '../../components/file-blob/file-blob';
 var File = require('../../resources/file');
+
+var $ = WebApp.$;
 
 var FilePage = WebApp.View.extend({
   template: template,
 
   events: {
-    'click .directory': 'handleDirectory'
+    'click .directory': 'handleDirectory',
+    'click .clipboard': 'clickClipboard'
+  },
+
+  clickClipboard: function(ev) {
+    $(ev.currentTarget).next('input')[0].select();
+    document.execCommand('copy');
   },
 
   handleDirectory: function(ev) {

@@ -10,37 +10,16 @@ import CommitsPage from './pages/commits/commits';
 import FilePage from './pages/file/file';
 import FileList from './components/file-list/file-list';
 
+import * as diff from 'diffhtml';
+
+// Opt into the experimental DOM API extensions.
+diff.enableProllyfill();
+
+// Opt into using the WebWorker to calculate changes.
+document.ENABLE_WORKER = true;
+
 // Create the application.
 const Application = WebApp.create({ root: '/' });
-
-// Configure templating.
-WebApp.Component.configure({
-  fetchTemplate: function(template) {
-    return template.render.bind(template);
-  },
-
-//  html: function($root, content) {
-//    var root = $root instanceof $ ? $root[0] : $root;
-//
-//    if (root) {
-//      if (typeof content === 'string') {
-//        diff.innerHTML(root, content);
-//      }
-//      else {
-//        var firstChild = root.firstChild;
-//
-//        if (!firstChild) {
-//          root.appendChild(content[0]);
-//        }
-//        else {
-//          diff.element(firstChild, content[0]);
-//        }
-//      }
-//    }
-//  },
-//
-//  remove: function() {}
-});
 
 // Set up the route states.
 WebApp.Router.create({
@@ -52,31 +31,10 @@ WebApp.Router.create({
     'repository/:repo/:branch/tree/*path': 'treePage'
   },
 
-  initialize: function() {
-    this.container = Application;
+  homePage() { HomePage.create(this.params).render(); },
+  repositoryPage() { RepositoryPage.create(this.params).render(); },
 
-    var router = this;
-
-    this.on('route', function(name) {
-      this.stopListening();
-
-      var router = this;
-      this.container.$el.removeClass().addClass(name.split('P').join('-p'));
-      this.container.setView(this.page).render();
-    });
-  },
-
-  homePage: function() {
-    this.page = HomePage.create();
-  },
-
-  repositoryPage: function() {
-    if (!this.params.branch) {
-      return this.navigate(WebApp.history.fragment + '/~workdir/tree/', true);
-    }
-
-    this.page = RepositoryPage.create(this.params);
-
+  /*
     this.page.setView('.outlet', FileList.create({
       collection: this.page.collection,
       model: this.page.model
@@ -88,12 +46,13 @@ WebApp.Router.create({
       repositoryPage.collection.fetch();
     });
   },
+    */
 
-  commitsPage: function() {
+  commitsPage() {
     this.page = CommitsPage.create(this.params);
   },
 
-  filePage: function() {
+  filePage() {
     this.page = FilePage.create(this.params);
 
     var model = this.page.model;
@@ -103,7 +62,7 @@ WebApp.Router.create({
     });
   },
 
-  treePage: function() {
+  treePage() {
     var repositoryPage = RepositoryPage.create(this.params);
     this.page = repositoryPage;
 

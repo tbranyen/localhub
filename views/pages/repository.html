@@ -1,0 +1,131 @@
+{%extend layouts/default as content%}
+  {%partial partials/header .%}
+
+  <div class="container clearfix">
+    <div>
+      <a href="#">All repositories</a>
+      <span class="octicon octicon-chevron-right sep"></span>
+      {%if model%}
+        <a href="#repository/{{ model.id }}"><span class="count">{{ model.get 'name' }}</span></a>
+      {%else%}
+        No repository found.
+      {%endif%}
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="container">
+    <div class="tabnav">
+      <nav class="tabnav-tabs">
+        <a class="tabnav-tab selected">
+          <select {%if not model%}disabled{%endif%} class="branch" placeholder="Select a branch">
+            <option value="~workdir">Working directory</option>
+
+            {%if model%}
+              {%each model.get 'branches' as branch%}
+              <option {%if model.attributes.branch == branch|stripRef%}selected{%endif%} value="{{ branch|stripRef }}">{{ branch|stripRef }}</option>
+              {%endeach%}
+            {%endif%}
+          </select>
+        </a>
+        <a href="#" class="tabnav-tab">Stashed</a>
+      </nav>
+    </div>
+    <div class="columns">
+      <div class="three-fourths column">
+        {%if collection%}
+        <nav class="menu {%if collection.showHidden%}show-hidden{%endif%} files">
+          {{ collection|log }}
+          {%partial components/file-list .%}
+        </nav>
+        {%else%}
+          <nav class="menu files">
+            <span>Repository not found</span>
+          </nav>
+        {%endif%}
+
+        <nav id="readme" class="menu">
+          <span class="menu-heading">README.md</span>
+
+          <span class="menu-item readme markdown-body">
+          {%if model%}
+            {{{ model.get 'readme' }}}
+          {%else%}
+            Repository not found, so no README displayed.
+          {%endif%}
+          </span>
+        </nav>
+      </div>
+
+      <div class="one-fourth column">
+        <nav class="menu">
+          <a class="menu-item selected" href="#">
+            <span class="octicon octicon-code"></span>
+            Code
+          </a>
+          <a class="menu-item" href="#">
+            <span class="octicon octicon-git-branch"></span>
+
+            <span class="counter">
+            {%if model%}
+              {%if model.attributes.branches%}
+                {{ model.attributes.branches.length }}
+              {%else%}
+                0
+              {%endif%}
+            {%else%}
+              0
+            {%endif%}
+            </span>
+
+            Branches
+          </a>
+          <a class="menu-item" href="#">
+            <span class="octicon octicon-tag"></span>
+
+            <span class="counter">
+            {%if model%}
+              {{ model.attributes.tags }}
+            {%else%}
+              0
+            {%endif%}
+            </span>
+
+            Tags
+          </a>
+          <a class="menu-item" href="#">
+            <span class="octicon octicon-book"></span>
+
+            <span class="counter">
+            {%if model%}
+              {{ model.attributes.notes }}
+            {%else%}
+              0
+            {%endif%}
+            </span>
+
+            Notes
+          </a>
+          <a class="menu-item"
+            {%if model%}
+            href="#repository/{{ model.id }}/{{ model.get 'branch' }}/commits"
+            {%endif%}
+          >
+            <span class="octicon octicon-git-commit"></span>
+
+            <span class="counter">
+            {%if model%}
+              {{ model.attributes.commits }}
+            {%else%}
+              0
+            {%endif%}
+            </span>
+
+            Commits
+          </a>
+        </nav>
+      </div>
+    </div>
+  </div>
+{%endextend%}

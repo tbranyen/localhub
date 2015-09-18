@@ -1,11 +1,8 @@
 'use strict';
 
 var WebApp = require('webapp');
-var template = require('./repository-list.html');
 
 var RepositoryListComponent = WebApp.View.extend({
-  template: template,
-
   initialize: function() {
     this.listenTo(this.collection, 'sync', this.render);
   },
@@ -28,7 +25,7 @@ var RepositoryListComponent = WebApp.View.extend({
     history.replaceState(null, null, '?home-search=' + this.searchTerm);
 
     return this.collection.filter(function(repo) {
-      return repo.get('location').indexOf(this.searchTerm) > -1;
+      return repo.get('location').toLowerCase().indexOf(this.searchTerm) > -1;
     }, this);
   }
 });

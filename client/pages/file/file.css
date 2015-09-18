@@ -13,3 +13,7 @@
   color: #FFF;
   font-weight: bold;
 }
+
+.clipboard {
+  cursor: pointer;
+}

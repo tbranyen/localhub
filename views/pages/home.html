@@ -1,0 +1,17 @@
+{%extend layouts/default as content%}
+  {%partial partials/header .%}
+
+  <div class="container">
+    <center>
+      <h1>
+        <span class="count">{{ repoList|prop 'length' }}</span> repositories found
+      </h1>
+    </center>
+
+    <form>
+      <input tabindex="1" class="input-large search" type="text" placeholder="Search...">
+    </form>
+
+    {%partial components/repository-list repoList%}
+  </div>
+{%endextend%}

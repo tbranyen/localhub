@@ -18,6 +18,7 @@ var CommitListComponent = WebApp.View.extend({
     var termLower = this.searchTerm.toLowerCase();
 
     return this.collection.filter(function(commit) {
+      commit.repo = this.collection.repo;
       return commit.attributes.message.toLowerCase().indexOf(termLower) > -1;
     }, this);
   }

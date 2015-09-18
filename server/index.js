@@ -4,7 +4,7 @@ const api = require('./api');
 const app = configure(express());
 
 app.get('/', function(req, res) {
-  res.render('index');
+  res.render('pages/home');
 });
 
 app.use('/api', api);
@@ -24,5 +24,5 @@ app.use(function(req, res, next) {
 
   res.locals.env = process.env.NODE_ENV;
 
-  res.render('index');
+  res.render('pages/home');
 });

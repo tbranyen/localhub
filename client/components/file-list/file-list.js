@@ -1,13 +1,10 @@
 'use strict';
 
 import WebApp from 'webapp';
-import template from './file-list.html';
 
 var local = window.localStorage;
 
 var FileListComponent = WebApp.View.extend({
-  template: template,
-
   initialize: function() {
     this.showHidden = local.showHidden ? local.showHidden === 'true' : true;
     this.listenTo(this.collection, 'sync', this.render);

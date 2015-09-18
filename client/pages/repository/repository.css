@@ -2,7 +2,7 @@
   background-color: #F8F8F8;
 }
 
-.branch { border: none; }
+.branch { cursor: pointer; border: none; }
 
 .readme {
   background-color: #FFFFFF;

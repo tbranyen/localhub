@@ -36,7 +36,6 @@ module.exports = function(server) {
   // Set the view engine.
   server.engine('html', combynExpress());
   server.set('view engine', 'html');
-  server.set('views', local('./templates'));
 
   // Listen server on the given port and host.
   if (port && host) {

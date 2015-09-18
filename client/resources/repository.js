@@ -7,6 +7,7 @@ var RepositoryModel = WebApp.Model.extend({
   urlRoot: '/api/repositories',
 
   defaults: {
+    branch: '~workdir',
     branches: 0,
     commits: 0,
     notes: 0,

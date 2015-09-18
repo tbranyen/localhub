@@ -1,18 +1,20 @@
 'use strict';
 
 import WebApp from 'webapp';
-import template from './repository.html';
+
+import Page from '../page';
 import Repository from '../../resources/repository';
 import { TreeCollection } from '../../resources/tree';
+import template from '../../../views/pages/repository.html';
 
-var RepositoryPage = WebApp.View.extend({
-  template: template,
+export default Page.extend({
+  template,
 
   events: {
     'input .branch': 'changeBranch'
   },
 
-  changeBranch: function(ev) {
+  changeBranch(ev) {
     ev.preventDefault();
 
     var branch = ev.currentTarget.value;
@@ -20,18 +22,21 @@ var RepositoryPage = WebApp.View.extend({
     WebApp.history.navigate('repository/' + this.repo + '/' + branch + '/tree/', true);
   },
 
-  initialize: function() {
+  initialize() {
     this.model = Repository.Model.create({ repo: this.repo });
     this.listenTo(this.model, 'sync', this.render);
+
+    this.model.fetch();
 
     this.collection = TreeCollection.create(this.model);
     this.collection.repo = this.model;
     this.collection.path = this.path || '';
+    this.listenTo(this.collection, 'sync', this.render);
+
+    this.collection.fetch();
 
     this.listenTo(this.collection, 'showHidden', function() {
       this.$('.menu').toggleClass('show-hidden', this.collection.showHidden);
     });
   }
 });
-
-export default RepositoryPage;

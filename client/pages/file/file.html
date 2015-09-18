@@ -43,7 +43,8 @@
           {{ model.commit.attributes.author.name }} <span class="commit_date">authored {{ model.commit.get 'date' }}</span>
           <span class="latest_commit">
             latest commit <span class="commit_sha">{{ model.commit.attributes.sha|slice 0 10 }}</span>
-            <span class="octicon octicon-clippy"></span>
+            <span class="octicon octicon-clippy clipboard"></span>
+            <input type="hidden" value="{{ model.commit.attributes.sha }}">
           </span>
         </div>
 

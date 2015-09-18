@@ -269,7 +269,7 @@ resource.get('/:id', function(req, res, next) {
       out.branch = '~workdir';
     });
 
-    var readme = currentBranchCommit.then(getREADME).then(function(blob) {
+    var readme = currentBranchCommit.then(getREADME('~workdir')).then(function(blob) {
       out.readme = md.render(blob.toString());
     });
 

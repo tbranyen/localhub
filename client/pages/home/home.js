@@ -1,37 +1,15 @@
 'use strict';
 
-var WebApp = require('webapp');
-var template = require('./home.html');
+import WebApp from 'webapp';
+import { $, _ } from 'webapp';
 
-var Repository = require('../../resources/repository');
-var RepoList = require('../../components/repository-list/repository-list');
+import Page from '../page';
+import Repository from '../../resources/repository';
+import RepoList from '../../components/repository-list/repository-list';
+import template from '../../../views/pages/home.html';
 
-var HomePage = WebApp.View.extend({
-  template: template,
-
-  initialize: function() {
-    this.collection = Repository.Collection.create();
-    this.collection.fetch();
-
-    this.setView('.outlet', RepoList.create({
-      collection: this.collection
-    }));
-
-    this.listenTo(this.collection, 'sync', this.render);
-  },
-
-  afterRender: function() {
-    var search = location.search.slice(1).split('&');
-
-    search.forEach(function(item) {
-      var parts = item.split('=');
-
-      if (parts[0] === 'home-search') {
-        this.$('.search').val(parts[1]);
-        this.handleSearchInput({ currentTarget: { value: parts[1] } });
-      }
-    }, this);
-  },
+export default Page.extend({
+  template,
 
   events: {
     'click .repo-list-item' : 'handleItemClick',
@@ -40,21 +18,27 @@ var HomePage = WebApp.View.extend({
     'click .open': 'handleOpen'
   },
 
-  handleItemClick: function(ev) {
-    ev.preventDefault();
-
-    WebApp.history.navigate(
-      this.$(ev.currentTarget).find('a').first().attr('href'), true);
+  initialize: function() {
+    this.collection = Repository.Collection.create();
+    this.collection.fetch();
+    this.listenTo(this.collection, 'sync', this.render);
   },
 
-  handleSync: function(ev) {
-    var button = this.$(ev.currentTarget);
-    var collection = this.collection;
+  handleItemClick(ev) {
+    ev.preventDefault();
+
+    let anchor = $(ev.currentTarget).find('a');
+    WebApp.history.navigate(anchor.first().attr('href'), true);
+  },
+
+  handleSync(ev) {
+    let button = this.$(ev.currentTarget);
+    let collection = this.collection;
 
     button.attr('disabled', 'disabled');
     button.addClass('pending');
 
-    WebApp.$.getJSON('/api/repositories/sync', function() {
+    return $.getJSON('/api/repositories/sync', function() {
       button.removeAttr('disabled');
       button.removeClass('pending');
 
@@ -62,19 +46,27 @@ var HomePage = WebApp.View.extend({
     });
   },
 
-  handleOpen: function(ev) {
+  handleOpen(ev) {
     ev.preventDefault();
     ev.stopPropagation();
 
-    WebApp.$.get(this.$(ev.currentTarget).attr('href'));
+    return $.get(this.$(ev.currentTarget).attr('href'));
   },
 
-  handleSearchInput: WebApp._.debounce(function(ev) {
-    var repoList = this.getView('.outlet');
-    repoList.searchTerm = ev.currentTarget.value.toLowerCase();
-    repoList.render();
-    this.$('.count').text(repoList.serialize().length);
-  }, 150)
-});
+  handleSearchInput: _.debounce(function(ev) {
+    this.searchTerm = ev.currentTarget.value.toLowerCase();
+    this.render();
+  }, 150),
 
-module.exports = HomePage;
+  repoList() {
+    if (!this.searchTerm) {
+      return this.collection.models;
+    }
+
+    history.replaceState(null, null, '?home-search=' + this.searchTerm);
+
+    return this.collection.filter(function(repo) {
+      return repo.get('location').toLowerCase().indexOf(this.searchTerm) > -1;
+    }, this);
+  }
+});
