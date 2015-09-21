@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const exec = require('child_process').exec;
 const express = require('express');
-const resource = express();
+const resource = express.Router();
 const _ = require('lodash');
 const Git = require('nodegit');
 const Remarkable = require('remarkable');
@@ -49,7 +49,7 @@ var md = new Remarkable({
  * @public
  * @return {Array} of repository objects.
  */
-resource.get('/', function(req, res, next) {
+resource.get('/', function(req, res) {
   res.json(cache.get());
 });
 

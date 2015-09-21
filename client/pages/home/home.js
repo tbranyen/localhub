@@ -67,6 +67,6 @@ export default Page.extend({
 
     return this.collection.filter(function(repo) {
       return repo.get('location').toLowerCase().indexOf(this.searchTerm) > -1;
-    }, this);
+    }, this).map(model => model.toJSON());
   }
 });

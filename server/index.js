@@ -3,6 +3,16 @@ const configure = require('./configure');
 const api = require('./api');
 const app = configure(express());
 
+const RepositoryResource = require('./api/resources/repositories');
+
+var repoList = null;
+
+RepositoryResource.stack[0].handle({ method: 'GET' }, {
+  json: function(out) {
+    repoList = out;
+  }
+});
+
 app.get('/', function(req, res) {
   res.render('pages/home');
 });
@@ -24,5 +34,11 @@ app.use(function(req, res, next) {
 
   res.locals.env = process.env.NODE_ENV;
 
-  res.render('pages/home');
+  if (req.url.indexOf('repository') > -1) {
+    res.render('pages/repository');
+  }
+  else {
+    res.locals.repoList = function() { return repoList };
+    res.render('pages/home');
+  }
 });

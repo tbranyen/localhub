@@ -36,7 +36,6 @@
       <div class="three-fourths column">
         {%if collection%}
         <nav class="menu {%if collection.showHidden%}show-hidden{%endif%} files">
-          {{ collection|log }}
           {%partial components/file-list .%}
         </nav>
         {%else%}

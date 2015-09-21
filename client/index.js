@@ -31,22 +31,8 @@ WebApp.Router.create({
     'repository/:repo/:branch/tree/*path': 'treePage'
   },
 
-  homePage() { HomePage.create(this.params).render(); },
-  repositoryPage() { RepositoryPage.create(this.params).render(); },
-
-  /*
-    this.page.setView('.outlet', FileList.create({
-      collection: this.page.collection,
-      model: this.page.model
-    }));
-
-    var repositoryPage = this.page;
-
-    this.page.model.fetch().then(function() {
-      repositoryPage.collection.fetch();
-    });
-  },
-    */
+  homePage() { HomePage.create(this.params); },
+  repositoryPage() { RepositoryPage.create(this.params); },
 
   commitsPage() {
     this.page = CommitsPage.create(this.params);
