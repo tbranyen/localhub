@@ -1,5 +1,7 @@
 'use strict';
 
+import Falcor from 'falcor';
+import FalcorHttpDataSource from 'falcor-http-datasource';
 import WebApp from 'webapp';
 import { $, _ } from 'webapp';
 
@@ -10,16 +12,19 @@ import CommitsPage from './pages/commits/commits';
 import FilePage from './pages/file/file';
 import FileList from './components/file-list/file-list';
 
-import * as diff from 'diffhtml';
+import { enableProllyfill } from 'diffhtml';
 
 // Opt into the experimental DOM API extensions.
-diff.enableProllyfill();
+enableProllyfill();
 
 // Opt into using the WebWorker to calculate changes.
-document.ENABLE_WORKER = true;
+document.ENABLE_WORKER = false;
 
 // Create the application.
-const Application = WebApp.create({ root: '/' });
+const application = WebApp.create({ root: '/' });
+
+// Create a single model for the entire application.
+const model = new Falcor.Model({ source: new FalcorHttpDataSource('/api') });
 
 // Set up the route states.
 WebApp.Router.create({
@@ -31,22 +36,10 @@ WebApp.Router.create({
     'repository/:repo/:branch/tree/*path': 'treePage'
   },
 
-  homePage() { HomePage.create(this.params); },
+  homePage()       { HomePage.create(this.params); },
   repositoryPage() { RepositoryPage.create(this.params); },
-
-  commitsPage() {
-    this.page = CommitsPage.create(this.params);
-  },
-
-  filePage() {
-    this.page = FilePage.create(this.params);
-
-    var model = this.page.model;
-
-    this.page.model.fetch().then(function() {
-      model.file.fetch();
-    });
-  },
+  commitsPage()    { CommitsPage.create(this.params); },
+  filePage()       { FilePage.create(this.params).refreshData(); },
 
   treePage() {
     var repositoryPage = RepositoryPage.create(this.params);
@@ -75,7 +68,7 @@ $(document).on("click", "a[href]:not([data-bypass])", function(evt) {
   // Get the absolute anchor href.
   var href = { prop: $(this).prop("href"), attr: $(this).attr("href") };
   // Get the absolute root.
-  var root = location.protocol + "//" + location.host + Application.root;
+  var root = location.protocol + "//" + location.host + application.root;
 
   // Ensure the root is part of the anchor href, meaning it's relative.
   if (href.prop.slice(0, root.length) === root) {
@@ -91,4 +84,4 @@ $(document).on("click", "a[href]:not([data-bypass])", function(evt) {
 });
 
 // Kick off the application!
-Application.start({ pushState: true });
+application.start({ pushState: true });

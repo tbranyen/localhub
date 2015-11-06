@@ -4,14 +4,14 @@
   <div class="container">
     <center>
       <h1>
-        <span class="count">{{ repoList|prop 'length' }}</span> repositories found
+        <span class="count">{{ repositories|prop 'length' }}</span> repositories found
       </h1>
     </center>
 
-    <form>
-      <input tabindex="1" class="input-large search" type="text" placeholder="Search...">
+    <form action="/" method="GET">
+      <input tabindex="1" class="input-large search" type="text" name="q" value="{{ searchTerm }}" placeholder="Search...">
     </form>
 
-    {%partial components/repository-list repoList%}
+    {%partial components/repository-list repositories%}
   </div>
 {%endextend%}

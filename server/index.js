@@ -1,23 +1,25 @@
+const FalcorExpress = require('falcor-express');
+const Falcor = require('falcor');
 const express = require('express');
 const configure = require('./configure');
 const api = require('./api');
-const app = configure(express());
+const LocalHubRouter = require('./falcor');
+const indexRoutes = require('./routes/index');
 
-const RepositoryResource = require('./api/resources/repositories');
+var source = new LocalHubRouter();
+var model = new Falcor.Model({ source });
+var app = configure(express());
 
-var repoList = null;
+app.get('/', indexRoutes({ model }));
 
-RepositoryResource.stack[0].handle({ method: 'GET' }, {
-  json: function(out) {
-    repoList = out;
-  }
-});
-
-app.get('/', function(req, res) {
-  res.render('pages/home');
+app.get('/repository', function(req, res) {
+  res.render('pages/repository');
 });
 
 app.use('/api', api);
+app.use('/api/falcor', FalcorExpress.dataSourceRoute(function() {
+  return source;
+}));
 
 // Enable pushState support.
 app.use(function(req, res, next) {
@@ -33,12 +35,4 @@ app.use(function(req, res, next) {
   if (match) { return next(); }
 
   res.locals.env = process.env.NODE_ENV;
-
-  if (req.url.indexOf('repository') > -1) {
-    res.render('pages/repository');
-  }
-  else {
-    res.locals.repoList = function() { return repoList };
-    res.render('pages/home');
-  }
 });

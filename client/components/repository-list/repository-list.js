@@ -19,10 +19,10 @@ var RepositoryListComponent = WebApp.View.extend({
 
   serialize: function() {
     if (!this.searchTerm) {
-      return this.collection.models;
+      return this.collection.toJSON();
     }
 
-    history.replaceState(null, null, '?home-search=' + this.searchTerm);
+    history.replaceState(null, null, '?q=' + this.searchTerm);
 
     return this.collection.filter(function(repo) {
       return repo.get('location').toLowerCase().indexOf(this.searchTerm) > -1;

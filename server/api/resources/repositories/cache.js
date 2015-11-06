@@ -89,6 +89,4 @@ exports.get = function(id) {
  *
  * @return
  */
-exports.containers = function() {
-
-};
+exports.containers = function() {};

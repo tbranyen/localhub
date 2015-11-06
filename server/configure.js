@@ -7,8 +7,9 @@ const livereload = require('express-livereload');
 var local = path.join.bind(path, __dirname);
 
 module.exports = function(server) {
-  var port = process.env.PORT || 8000;
+  var port = process.env.PORT;
   var host = process.env.HOST;
+  var env = process.env.NODE_ENV || 'test';
 
   server.staticFiles = [
     'package.json',
@@ -19,11 +20,13 @@ module.exports = function(server) {
     'node_modules'
   ];
 
-  if (process.env.NODE_ENV === 'production') {
+  if (env === 'production') {
     host = host || '127.0.0.1';
+    port = port || 80;
   }
-  else if (process.env.NODE_ENV === 'test') {
+  else if (env === 'test') {
     host = host || '127.0.0.1';
+    port = port || 8000;
 
     livereload(server, { watchDir: [local('../dist/')] });
   }
@@ -39,7 +42,7 @@ module.exports = function(server) {
 
   // Listen server on the given port and host.
   if (port && host) {
-    server.listen(port, host, function() {
+    server.listen(port, host, function(err) {
       console.log('Listening on http://' + host + ':' + port);
     });
   }

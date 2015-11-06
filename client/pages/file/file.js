@@ -37,6 +37,14 @@ var FilePage = WebApp.View.extend({
     ].join('/'), true);
   },
 
+  refreshData: function() {
+    var model = this.model;
+
+    return this.model.fetch().then(function() {
+      return model.file.fetch();
+    });
+  },
+
   initialize: function() {
     this.model = Repository.Model.create({ repo: this.repo });
     this.listenTo(this.model, 'sync', this.render);

@@ -2,6 +2,7 @@
 
 import WebApp from 'webapp';
 import { CommitModel } from './commit';
+import API from './index';
 
 var RepositoryModel = WebApp.Model.extend({
   urlRoot: '/api/repositories',
@@ -34,7 +35,19 @@ var RepositoryModel = WebApp.Model.extend({
 
 var RepositoryCollection = WebApp.Collection.extend({
   model: RepositoryModel,
-  url: '/api/repositories'
+
+  sync: function(method, model, options) {
+    return API.get('repositories[0..500]["name", "id", "location"]')
+      .then(options.success)
+      .catch(options.failure);
+  },
+
+  parse: function(resp) {
+    var repositories = resp.json.repositories;
+    repositories.length = Object.keys(repositories).length - 1;
+
+    return Array.prototype.slice.call(repositories);
+  }
 });
 
 module.exports = {

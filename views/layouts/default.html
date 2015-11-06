@@ -6,7 +6,12 @@
 
   <title>LocalHub: Your Own Personal GitHub</title>
 
+  {%if env == 'production'%}
+  <link rel="stylesheet" href="/dist/localhub.css">
+  {%else%}
   <link rel="stylesheet" href="/client/index.css">
+  {%endif%}
+  <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
 </head>
 <body>
   <main role="main">{%partial content%}</main>
